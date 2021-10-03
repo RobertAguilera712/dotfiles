@@ -4,13 +4,25 @@
 autoload -U colors && colors
 PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
 
-# History in cache directory:
-HISTSIZE=10000
-SAVEHIST=10000
-HISTFILE=~/.cache/zsh/history
+# initialize autocompletion
+autoload -U compinit
+compinit
+
+# history setup
+setopt APPEND_HISTORY
+setopt SHARE_HISTORY
+setopt incappendhistory     #Immediately append to the history file, not just when a term is killed
+HISTFILE=~/.zsh_history     #Where to save history to disk
+HISTSIZE=5000               #How many lines of history to keep in memory
+SAVEHIST=5000               #Number of history entries to save to disk
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt EXTENDED_HISTORY
+
+# autocompletion using arrow keys (based on history)
+bindkey '\e[A' history-search-backward
+bindkey '\e[B' history-search-forward
 
 # Basic auto/tab complete:
-autoload -U compinit
 zstyle ':completion:*' menu select
 zmodload zsh/complist
 compinit
@@ -48,25 +60,9 @@ zle -N zle-line-init
 echo -ne '\e[6 q' # Use beam shape cursor on startup.
 preexec() { echo -ne '\e[6 q' ;} # Use beam shape cursor for each new prompt.
 
-# Use lf to switch directories and bind it to ctrl-o
-lfcd () {
-    tmp="$(mktemp)"
-    lf -last-dir-path="$tmp" "$@"
-    if [ -f "$tmp" ]; then
-        dir="$(cat "$tmp")"
-        rm -f "$tmp"
-        [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
-    fi
-}
-bindkey -s '^o' 'lfcd\n'
-
 # Edit line in vim with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
-
-# Load aliases and shortcuts if existent.
-[ -f "$HOME/.config/shortcutrc" ] && source "$HOME/.config/shortcutrc"
-[ -f "$HOME/.config/aliasrc" ] && source "$HOME/.config/aliasrc"
 
 #aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -79,31 +75,15 @@ if [ -x /usr/bin/dircolors ]; then
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
-
-# AUTOCOMPLETION
-
-# initialize autocompletion
-autoload -U compinit
-compinit
-
-# history setup
-setopt APPEND_HISTORY
-setopt SHARE_HISTORY
-setopt incappendhistory     #Immediately append to the history file, not just when a term is killed
-HISTFILE=~/.zsh_history     #Where to save history to disk
-HISTSIZE=5000               #How many lines of history to keep in memory
-SAVEHIST=5000               #Number of history entries to save to disk
-setopt HIST_EXPIRE_DUPS_FIRST
-setopt EXTENDED_HISTORY
-
-# autocompletion using arrow keys (based on history)
-bindkey '\e[A' history-search-backward
-bindkey '\e[B' history-search-forward
+# If latex templeates for homework exists
+if [[ -d ~/.local/latex-templeates/homework ]]; then
+    # use 'homework' as command to copy the templeates to the current directory
+    alias homework='cp -r ~/.local/latex-templeates/homework/* .'
+fi
 
 # GENERAL
 
-# (bonus: Disable sound errors in Zsh)
-
+# Disable sound errors in Zsh
 # never beep
 setopt NO_BEEP
 
