@@ -23,6 +23,8 @@ endif
 call plug#begin('~/.vim/plugged')
 
 Plug 'morhetz/gruvbox'
+Plug 'mattn/emmet-vim'
+
 
 call plug#end()
 

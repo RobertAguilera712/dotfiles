@@ -87,5 +87,9 @@ fi
 # never beep
 setopt NO_BEEP
 
+# envioroment variables
+export PLANTUML_JAR=/usr/share/plantuml/plantuml.jar
+export GRAPHVIZ_DOT=dot
+
 # Load zsh-syntax-highlighting; should be last.
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
