@@ -28,7 +28,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'preservim/nerdtree'
 Plug 'jiangmiao/auto-pairs'
 Plug 'alvan/vim-closetag'
-
+Plug 'tpope/vim-surround'
 
 call plug#end()
 
