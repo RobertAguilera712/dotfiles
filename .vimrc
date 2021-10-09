@@ -24,6 +24,10 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'morhetz/gruvbox'
 Plug 'mattn/emmet-vim'
+Plug 'sheerun/vim-polyglot'
+Plug 'preservim/nerdtree'
+Plug 'jiangmiao/auto-pairs'
+Plug 'alvan/vim-closetag'
 
 
 call plug#end()
