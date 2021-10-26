@@ -22,6 +22,11 @@ setopt EXTENDED_HISTORY
 bindkey '\e[A' history-search-backward
 bindkey '\e[B' history-search-forward
 
+bindkey -v
+bindkey '^R' history-incremental-search-backward
+bindkey -v
+bindkey '^T' history-incremental-search-forward
+
 # Basic auto/tab complete:
 zstyle ':completion:*' menu select
 zmodload zsh/complist
