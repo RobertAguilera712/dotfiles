@@ -95,6 +95,8 @@ setopt NO_BEEP
 # envioroment variables
 export PLANTUML_JAR=/usr/share/plantuml/plantuml.jar
 export GRAPHVIZ_DOT=/usr/bin/dot
+export PROMPT_COMMAND='printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/~}"'
+precmd() { eval "$PROMPT_COMMAND" }
 
 
 # Load zsh-syntax-highlighting; should be last.
